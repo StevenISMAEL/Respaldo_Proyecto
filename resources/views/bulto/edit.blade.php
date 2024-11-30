@@ -38,8 +38,12 @@
 
                                 <div class="form-group">
                                     <label for="tipo_animal">Tipo de Animal</label>
-                                    <input type="text" name="tipo_animal" id="tipo_animal" class="form-control"
+                                    <select type="text" name="tipo_animal" id="tipo_animal" class="form-control"
                                         value="{{ $bulto->tipo_animal }}" required>
+                                        <option value="Perro">Perro</option>
+                                        <option value="Gato">Gato</option>
+                                        <option value="Otro">Otro</option>
+                                    </select>
                                 </div>
 
                                 <div class="form-group">
