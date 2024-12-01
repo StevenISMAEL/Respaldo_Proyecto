@@ -51,14 +51,14 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            Lara Steven Ismael
+                                            Lara Cruz Steven Ismael
                                         </td>
                                         <td>
                                             <div class="btn-group">
-                                                <a href="{{ route('cliente.index') }}" class="btn btn-info">CRUD Proveedores</a>
+                                                <a href="{{ route('proveedor.index') }}" class="btn btn-info">CRUD Proveedores</a>
                                             </div>
                                             <div class="btn-group">
-                                                <a href="{{ route('producto.index') }}" class="btn btn-info">CRUD Inventario</a>
+                                                <a href="{{ route('inventario.index') }}" class="btn btn-info">CRUD Inventario</a>
                                             </div>
                                         </td>
                                     </tr>
