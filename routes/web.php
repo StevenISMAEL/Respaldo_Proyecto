@@ -12,6 +12,8 @@ use App\Http\Controllers\KardexController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Middleware\RoleAdminMiddleware;
+use App\Http\Controllers\RoleController;
+
 
 // ✅ Ruta principal (welcome)
 Route::get('/', function () {
@@ -33,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard')->middleware('verified');
+    
 });
 
 // ✅ **Rutas protegidas para admin**
@@ -48,6 +51,7 @@ Route::middleware(['auth', RoleAdminMiddleware::class . ':admin'])->group(functi
     Route::resource('proveedor', ProveedorController::class);
     Route::resource('compras', CompraController::class);
     Route::resource('kardex', KardexController::class);
+    Route::resource('roles', RoleController::class)->except(['show']);
 });
 
 // ✅ **Rutas para bodeguero**

@@ -145,11 +145,12 @@
                         <i class="glyphicon glyphicon-briefcase"></i> Proveedores
                     </a>
                 </li>
-                <li class="{{ Request::is('configuracion*') ? 'active' : '' }}">
-                    <a href="#">
-                        <i class="glyphicon glyphicon-cog"></i> Configuración
-                    </a>
-                </li>
+                @if (Auth::check() && Auth::user()->role === 'admin')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('roles.index') }}">⚙️ Configuración</a>
+                    </li>
+                @endif
+
             </ul>
         </nav>
 
@@ -170,7 +171,8 @@
                         <li class="ml-3">
                             <form method="POST" action="{{ route('logout') }}" style="display:inline; padding: 10px">
                                 @csrf
-                                <button class="btn btn-danger navbar-btn btn-logout" type="submit">Cerrar sesión</button>
+                                <button class="btn btn-danger navbar-btn btn-logout" type="submit">Cerrar
+                                    sesión</button>
                             </form>
                         </li>
                     </ul>
