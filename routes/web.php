@@ -59,3 +59,10 @@ Route::middleware(['auth', RoleMiddleware::class.':vendedor'])->group(function (
     Route::resource('ventas', VentaController::class)->except(['destroy']);
     Route::resource('clientes', ClienteController::class);
 });
+
+// ✅ Rutas para admin de proveedores
+Route::middleware(['auth', RoleMiddleware::class.':adminProveedor'])->group(function () {
+    Route::resource('proveedor', ProveedorController::class);
+    Route::resource('compras', CompraController::class);
+});
+

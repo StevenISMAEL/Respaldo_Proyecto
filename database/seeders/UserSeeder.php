@@ -43,5 +43,13 @@ class UserSeeder extends Seeder
         ]);
         $vendedor->assignRole('vendedor');
 
+        //crear usuario administador de proveedores
+        $adminProveedor = User::create([
+            'name' => 'Administrador de Proveedor User',
+            'email' => 'Aproveedor@example.com',
+            'password' => Hash::make('Aproveedor123'),
+        ]);
+        $adminProveedor->assignRole('adminProveedor');
+
     }
 }

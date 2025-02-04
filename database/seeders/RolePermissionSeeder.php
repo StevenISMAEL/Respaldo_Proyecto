@@ -15,17 +15,14 @@ class RolePermissionSeeder extends Seeder
         $user = Role::firstOrCreate(['name' => 'user']);
         $bodeguero = Role::firstOrCreate(['name' => 'bodeguero']); 
         $vendedor = Role::firstOrCreate(['name' => 'vendedor']);
+        $adminProveedor = Role::firstOrCreate(['name' => 'adminProveedor']);
 
          // ✅ Crear permisos
          $permissions = [
             // Permisos generales
             'ver dashboard',
 
-            // Permisos de productos
-            'crear productos',
-            'editar productos',
-            'eliminar productos',
-            'ver productos',
+            
 
             // Permisos de proveedores
             'ver proveedores',
@@ -39,7 +36,11 @@ class RolePermissionSeeder extends Seeder
             //permiso para ver kardex
             'ver kardex',
 
-
+            // Permisos de productos
+            'crear productos',
+            'editar productos',
+            'eliminar productos',
+            'ver productos',
             //permisos de Ventas
             'crear ventas',
             'editar ventas',
@@ -50,6 +51,16 @@ class RolePermissionSeeder extends Seeder
             'editar clientes',
             'eliminar clientes',
             'ver clientes',
+            //permisos de Compras
+            'crear compras',
+            'editar compras',
+            'eliminar compras',
+            'ver compras',
+            //permisos de Proveedores
+            'crear proveedores',
+            'editar proveedores',
+            'eliminar proveedores',
+            'ver proveedores',
 
 
         ];
@@ -83,6 +94,16 @@ class RolePermissionSeeder extends Seeder
             'editar clientes',
             'eliminar clientes',
             'ver clientes'
+        ]);
+        $adminProveedor->givePermissionTo([
+            'crear proveedores',
+            'editar proveedores',
+            'eliminar proveedores',
+            'ver proveedores',
+            'crear compras',
+            'editar compras',
+            'eliminar compras',
+            'ver compras',
         ]);
     }
 }
