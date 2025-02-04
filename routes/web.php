@@ -1,6 +1,6 @@
 <?php
 
-use Spatie\Permission\Middleware\RoleMiddleware;
+// use Spatie\Permission\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\VentaController;
@@ -11,6 +11,7 @@ use App\Http\Controllers\CompraController;
 use App\Http\Controllers\KardexController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Middleware\RoleAdminMiddleware;
 
 // ✅ Ruta principal (welcome)
 Route::get('/', function () {
@@ -35,8 +36,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // ✅ **Rutas protegidas para admin**
-Route::middleware(['auth', RoleMiddleware::class.':admin'])->group(function () {   
-
+Route::middleware(['auth', RoleAdminMiddleware::class . ':admin'])->group(function () {   
     // // Perfil del usuario
     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -51,20 +51,20 @@ Route::middleware(['auth', RoleMiddleware::class.':admin'])->group(function () {
 });
 
 // ✅ **Rutas para bodeguero**
-Route::middleware(['auth', RoleMiddleware::class.':bodeguero'])->group(function () {   
+Route::middleware(['auth', RoleAdminMiddleware::class.':bodeguero'])->group(function () {   
     Route::resource('productos', ProductoController::class);
     Route::get('proveedor', [ProveedorController::class, 'index'])->name('proveedor.index'); 
     Route::get('kardex', [KardexController::class, 'index'])->name('kardex.index');
 });
 
 // ✅ **Rutas para vendedor**
-Route::middleware(['auth', RoleMiddleware::class.':vendedor'])->group(function () {
+Route::middleware(['auth', RoleAdminMiddleware::class.':vendedor'])->group(function () {
     Route::resource('ventas', VentaController::class)->except(['destroy']);
     Route::resource('clientes', ClienteController::class);
 });
 
 // ✅ **Rutas para admin de proveedores**
-Route::middleware(['auth', RoleMiddleware::class.':adminProveedor'])->group(function () {
+Route::middleware(['auth', RoleAdminMiddleware::class.':adminProveedor'])->group(function () {
     Route::resource('proveedor', ProveedorController::class);
     Route::resource('compras', CompraController::class);
 });
