@@ -21,18 +21,12 @@ class RolePermissionSeeder extends Seeder
          $permissions = [
             // Permisos generales
             'ver dashboard',
-
-            
-
             // Permisos de proveedores
             'ver proveedores',
-
             // Permisos de compras
             'ver compras',
-
             // Permisos de ventas (NO ASIGNADOS A BODEGUERO)
             'gestionar ventas',
-
             //permiso para ver kardex
             'ver kardex',
 
@@ -70,7 +64,7 @@ class RolePermissionSeeder extends Seeder
         }
 
         // Asignar permisos a roles
-        $admin->givePermissionTo(Permission::all()); // El admin tiene todos los permisos
+        $admin->givePermissionTo(Permission::all()); 
 
         $user->givePermissionTo(['ver dashboard', 'ver compras']);
 

@@ -1,0 +1,28 @@
+[90m= [39m[34;4mIlluminate\Support\Collection[39;24m {#6248
+    [34mall[39m: [
+      "[32mver dashboard[39m",
+      "[32mver proveedores[39m",
+      "[32mver compras[39m",
+      "[32mgestionar ventas[39m",
+      "[32mver kardex[39m",
+      "[32mcrear productos[39m",
+      "[32meditar productos[39m",
+      "[32meliminar productos[39m",
+      "[32mver productos[39m",
+      "[32mcrear ventas[39m",
+      "[32meditar ventas[39m",
+      "[32meliminar ventas[39m",
+      "[32mver ventas[39m",
+      "[32mcrear clientes[39m",
+      "[32meditar clientes[39m",
+      "[32meliminar clientes[39m",
+      "[32mver clientes[39m",
+      "[32mcrear compras[39m",
+      "[32meditar compras[39m",
+      "[32meliminar compras[39m",
+      "[32mcrear proveedores[39m",
+      "[32meditar proveedores[39m",
+      "[32meliminar proveedores[39m",
+    ],
+  }
+
