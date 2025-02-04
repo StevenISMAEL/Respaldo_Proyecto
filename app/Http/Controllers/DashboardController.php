@@ -20,7 +20,7 @@ class DashboardController extends Controller
         $compras = Compra::with('detalles')->latest()->take(5)->get();
     
         // Obtener ventas por mes
-        $ventasPorMes = Venta::ventasPorMes()->pluck('total_venta')->toArray();
+        $ventasPorMes = Venta::ventasPorMes()->pluck('total_venta', 'mes')->toArray();
         $comprasPorMes = Compra::comprasPorMes()->pluck('total_compra')->toArray();
         
         return view('menu', compact('productos', 'ventas', 'compras', 'ventasPorMes', 'comprasPorMes'));

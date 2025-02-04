@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Venta extends Model
 {
@@ -31,5 +32,16 @@ class Venta extends Model
     public function detalles()
     {
         return $this->hasMany(DetalleVenta::class, 'id_ven', 'id_ven');
+    }
+    public static function ventasPorMes()
+    {
+        return DB::table('ventas')
+            ->selectRaw('EXTRACT(MONTH FROM fecha_emision_ven) as mes, 
+                    SUM(productos.precio_unitario_pro * detalles_ventas.cantidad_pro_detven) as total_venta')
+            ->join('detalles_ventas', 'ventas.id_ven', '=', 'detalles_ventas.id_ven')
+            ->join('productos', 'detalles_ventas.codigo_pro', '=', 'productos.codigo_pro')
+            ->groupBy('mes')
+            ->orderBy('mes', 'asc')
+            ->get();
     }
 }
