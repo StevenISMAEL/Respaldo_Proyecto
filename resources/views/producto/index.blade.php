@@ -1,66 +1,112 @@
 @extends('plantilla.plantilla')
 
 @section('content')
-    <div class="row">
-        <section class="content">
-            <div class="col-md-8 col-md-offset-2">
+    <div class="container-fluid">
+        <!-- Tarjetas de métricas -->
+        <div class="row text-center">
+            <div class="col-md-3">
+                <div class="panel-card" style="background-color: #f0ad4e; color: #fff;">
+                    <h3><i class="glyphicon glyphicon-list-alt"></i> Total Productos</h3>
+                    <p style="font-size: 24px;">{{ $productos->count() }}</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="panel-card" style="background-color: #5bc0de; color: #fff;">
+                    <h3><i class="glyphicon glyphicon-apple"></i> Productos Alimenticios</h3>
+                    <p style="font-size: 24px;">{{ $productos->where('alimenticio_pro', true)->count() }}</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="panel-card" style="background-color: #5cb85c; color: #fff;">
+                    <h3><i class="glyphicon glyphicon-usd"></i> Precio Promedio</h3>
+                    <p style="font-size: 24px;">${{ number_format($productos->avg('precio_unitario_pro'), 2) }}</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="panel-card" style="background-color: #d9534f; color: #fff;">
+                    <h3><i class="glyphicon glyphicon-tag"></i> Último Producto</h3>
+                    <p style="font-size: 24px;">{{ $productos->sortByDesc('created_at')->first()->nombre_pro ?? 'N/A' }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lista de productos -->
+        <div class="row">
+            <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="pull-left">
-                            <h3>Lista de Productos - Arellano Leonel</h3>
-                        </div>
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Lista de Productos</h3>
                         <div class="pull-right">
-                            <div class="btn-group">
-                                <a href="{{ route('producto.create') }}" class="btn btn-info">Añadir Producto</a>
-                            </div>
+                            <a href="{{ route('productos.create') }}" class="btn btn-success btn-sm">
+                                <i class="glyphicon glyphicon-plus"></i> Añadir Producto
+                            </a>
                         </div>
-                        <div class="table-container">
-                            <table id="mytable" class="table table-bordred table-striped">
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
                                 <thead>
-                                    <th>Código</th>
-                                    <th>Nombre</th>
-                                    <th>Tipo de Producto</th>
-                                    <th>Precio</th>
-                                    <th>Estado</th>
-                                    <th>Alimenticio</th>
-                                    <th>Editar</th>
-                                    <th>Eliminar</th>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Nombre</th>
+                                        <th>Precio Unitario</th>
+                                        <th>Stock</th>
+                                        <th>Mínimo</th>
+                                        <th>Máximo</th>
+                                        <th>Precio por Libra</th>
+                                        <th>Descripción</th>
+                                        <th>¿Alimenticio?</th>
+                                        <th>Tipo Animal</th>
+                                        <th>Tamaño/Raza</th>
+                                        <th>Acciones</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                     @if ($productos->count())
                                         @foreach ($productos as $producto)
                                             <tr>
-                                                <td>{{ $producto->codigo }}</td>
-                                                <td>{{ $producto->nombre }}</td>
-                                                <td>{{ $producto->tipo_producto }}</td>
-                                                <td>{{ $producto->precio_unitario }}</td>
-                                                <td>{{ $producto->estado }}</td>
-                                                <td>{{ $producto->alimenticio ? 'Sí' : 'No' }}</td>
-                                                <td><a class="btn btn-primary btn-xs"
-                                                        href="{{ route('producto.edit', $producto->codigo) }}"><span
-                                                            class="glyphicon glyphicon-pencil"></span></a></td>
+                                                <td>{{ $producto->codigo_pro }}</td>
+                                                <td>{{ $producto->nombre_pro }}</td>
+                                                <td>${{ number_format($producto->precio_unitario_pro, 2) }}</td>
+                                                <td>{{ $producto->stock_pro ?? 'N/A' }}</td>
+                                                <td>{{ $producto->minimo_pro ?? 'N/A' }}</td>
+                                                <td>{{ $producto->maximo_pro ?? 'N/A' }}</td>
+                                                <td>{{ $producto->alimenticio_pro ? number_format($producto->precio_libras_pro, 2) . ' $' : 'N/A' }}</td>
+                                                <td>{{ $producto->descripcion_pro }}</td>
+                                                <td>{{ $producto->alimenticio_pro ? 'Sí' : 'No' }}</td>
+                                                <td>{{ $producto->tipo_animal_pro }}</td>
+                                                <td>{{ $producto->tamano_raza_pro }}</td>
                                                 <td>
-                                                    <form action="{{ route('producto.destroy', $producto->codigo) }}"
-                                                        method="post">
-                                                        {{ csrf_field() }}
-                                                        <input name="_method" type="hidden" value="DELETE">
-                                                        <button class="btn btn-danger btn-xs" type="submit"><span
-                                                                class="glyphicon glyphicon-trash"></span></button>
+                                                    <a href="{{ route('productos.edit', $producto->codigo_pro) }}"
+                                                        class="btn btn-warning btn-sm">
+                                                        <i class="glyphicon glyphicon-pencil"></i> Editar
+                                                    </a>
+                                                    <form action="{{ route('productos.destroy', $producto->codigo_pro) }}" method="POST" style="display:inline-block;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                            onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?');">
+                                                            <i class="glyphicon glyphicon-trash"></i> Eliminar
+                                                        </button>
                                                     </form>
                                                 </td>
                                             </tr>
                                         @endforeach
                                     @else
                                         <tr>
-                                            <td colspan="8">No hay registros disponibles.</td>
+                                            <td colspan="12" class="text-center">No hay registros disponibles.</td>
                                         </tr>
                                     @endif
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    {{ $productos->links() }} <!-- Paginación -->
+                    <div class="panel-footer">
+                        {{ $productos->links() }}
+                    </div>
                 </div>
             </div>
-        </section>
-    @endsection
+        </div>
+    </div>
+@endsection

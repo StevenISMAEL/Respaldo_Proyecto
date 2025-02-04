@@ -9,40 +9,28 @@ class Producto extends Model
 {
     use HasFactory;
 
-    // Especifica la tabla asociada al modelo
     protected $table = 'productos';
-
-    // Especifica la clave primaria (si no es 'id', en este caso 'codigo')
-    protected $primaryKey = 'codigo';
-
-    // Especifica si la clave primaria es un valor autoincrementable
+    protected $primaryKey = 'codigo_pro';
     public $incrementing = false;
+    protected $keyType = 'string';
+    public $timestamps = true;
 
-    // Especifica los atributos que pueden ser asignados masivamente
     protected $fillable = [
-        'codigo',
-        'nombre',
-        'descripcion',
-        'tipo_producto',
-        'precio_unitario',
-        'estado',
-        'alimenticio',
-        'fecha_creacion',
+        'codigo_pro',
+        'nombre_pro',
+        'descripcion_pro',
+        'precio_unitario_pro',
+        'precio_libras_pro',
+        'alimenticio_pro',
+        'tipo_animal_pro',
+        'tamano_raza_pro',
+        'peso_libras_pro',
+        'minimo_pro',
+        'maximo_pro',
+        'fecha_registro_pro'
     ];
-
-    // Especifica los tipos de datos de los atributos
-    protected $casts = [
-        'alimenticio' => 'boolean',
-        'precio_unitario' => 'decimal:2',
-        'fecha_creacion' => 'datetime',
-    ];
-
-    // Si necesitas hacer algo al crear o actualizar, puedes agregar los siguientes métodos:
-    // protected static function boot()
-    // {
-    //     parent::boot();
-    //     static::creating(function ($producto) {
-    //         // Hacer algo antes de que se cree el producto
-    //     });
-    // }
+    public function lotes()
+    {
+        return $this->hasMany(Lote::class, 'codigo_pro', 'codigo_pro');
+    }
 }
