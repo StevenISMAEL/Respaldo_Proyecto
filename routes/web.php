@@ -55,7 +55,6 @@ Route::middleware(['auth', RoleMiddleware::class.':admin'])->group(function () {
 //bodeguero
 Route::middleware(['auth', RoleMiddleware::class.':bodeguero'])->group(function () {   
 
-
     // Cierre de sesión
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
@@ -63,5 +62,18 @@ Route::middleware(['auth', RoleMiddleware::class.':bodeguero'])->group(function 
     Route::resource('productos', ProductoController::class);
     Route::get('proveedor', [ProveedorController::class, 'index'])
     ->name('proveedor.index'); // Solo ver proveedores, no editar ni eliminar
+
+});
+
+//vendedor
+Route::middleware(['auth', RoleMiddleware::class.':vendedor'])->group(function () {
+
+    // Cierre de sesión
+    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
+    // CRUDs protegidos
+    Route::resource('ventas', VentaController::class)->except(['destroy']);
+    Route::resource('clientes', ClienteController::class);
+
 
 });

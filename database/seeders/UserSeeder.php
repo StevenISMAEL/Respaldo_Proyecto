@@ -27,7 +27,6 @@ class UserSeeder extends Seeder
         ]);
         $user->assignRole('user');
 
-
         // Crear usuario Bodeguero
         $bodeguero = User::create([
             'name' => 'Bodeguero User',
@@ -35,5 +34,14 @@ class UserSeeder extends Seeder
             'password' => Hash::make('bodega123'),
         ]);
         $bodeguero->assignRole('bodeguero');
+
+        // Crear usuario Vendedor
+        $vendedor = User::create([
+            'name' => 'Vendedor User',
+            'email' => 'vendedor@example.com',
+            'password' => Hash::make('vendedor123'),
+        ]);
+        $vendedor->assignRole('vendedor');
+
     }
 }
