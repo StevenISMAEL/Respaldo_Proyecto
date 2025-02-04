@@ -1,6 +1,6 @@
 <?php
+
 use Spatie\Permission\Middleware\RoleMiddleware;
-use Spatie\Permission\Middleware\PermissionMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\VentaController;
@@ -23,12 +23,12 @@ Route::middleware('guest')->group(function () {
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 });
 
-// Rutas protegidas para admin
-Route::middleware(['auth', RoleMiddleware::class.':admin'])->group(function () {   
-    
-    Route::get('/menu', [DashboardController::class, 'menu'])->name('menu');
+// ✅ Ruta única de logout 
+Route::middleware('auth')->post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
-    // Dashboard
+// ✅ Rutas protegidas para admin
+Route::middleware(['auth', RoleMiddleware::class.':admin'])->group(function () {   
+    Route::get('/menu', [DashboardController::class, 'menu'])->name('menu');
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard')->middleware('verified');
@@ -38,9 +38,6 @@ Route::middleware(['auth', RoleMiddleware::class.':admin'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Cierre de sesión
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-
     // CRUDs protegidos
     Route::resource('clientes', ClienteController::class);
     Route::resource('proveedor', ProveedorController::class);
@@ -48,32 +45,17 @@ Route::middleware(['auth', RoleMiddleware::class.':admin'])->group(function () {
     Route::resource('compras', CompraController::class);
     Route::resource('kardex', KardexController::class);
     Route::resource('ventas', VentaController::class); 
-
 });
 
-//bodeguero
+// ✅ Rutas para bodeguero
 Route::middleware(['auth', RoleMiddleware::class.':bodeguero'])->group(function () {   
-
-    // Cierre de sesión
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-
-    // CRUDs protegidos
     Route::resource('productos', ProductoController::class);
-    Route::get('proveedor', [ProveedorController::class, 'index'])->name('proveedor.index'); // Solo ver proveedores, no editar ni eliminar
+    Route::get('proveedor', [ProveedorController::class, 'index'])->name('proveedor.index'); 
     Route::get('kardex', [KardexController::class, 'index'])->name('kardex.index');
-
-
 });
 
-//vendedor
+// ✅ Rutas para vendedor
 Route::middleware(['auth', RoleMiddleware::class.':vendedor'])->group(function () {
-
-    // Cierre de sesión
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-
-    // CRUDs protegidos
     Route::resource('ventas', VentaController::class)->except(['destroy']);
     Route::resource('clientes', ClienteController::class);
-
-
 });
