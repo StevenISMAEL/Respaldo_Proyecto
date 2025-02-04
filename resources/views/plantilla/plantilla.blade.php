@@ -131,7 +131,7 @@
                     </a>
                 </li>
                 <li class="{{ Request::is('venta*') ? 'active' : '' }}">
-                    <a href="{{ route('venta.index') }}">
+                    <a href="{{ route('ventas.index') }}">
                         <i class="glyphicon glyphicon-shopping-cart"></i> Ventas
                     </a>
                 </li>
@@ -160,9 +160,9 @@
                     <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
                         <i class="glyphicon glyphicon-align-left"></i>
                     </button>
-                    <div class="navbar-header">
+                    {{-- <div class="navbar-header">
                         <a class="navbar-brand" style="color:#fff" href="#">Paws Word</a>
-                    </div>
+                    </div> --}}
                     <ul class="nav navbar-nav navbar-right">
                         <li class="navbar-text" style="color:#fff">
                             <strong>Usuario actual:</strong> {{ Auth::user()->name ?? 'Invitado' }}

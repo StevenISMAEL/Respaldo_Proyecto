@@ -36,6 +36,9 @@ class RolePermissionSeeder extends Seeder
             // Permisos de ventas (NO ASIGNADOS A BODEGUERO)
             'gestionar ventas',
 
+            //permiso para ver kardex
+            'ver kardex',
+
 
             //permisos de Ventas
             'crear ventas',
@@ -60,12 +63,14 @@ class RolePermissionSeeder extends Seeder
 
         $user->givePermissionTo(['ver dashboard', 'ver compras']);
 
+        //permisos para el bodeguero
         $bodeguero->givePermissionTo([
             'crear productos',
             'editar productos',
             'eliminar productos',
             'ver productos',
-            'ver proveedores' // Solo puede ver proveedores, no editarlos ni eliminarlos.
+            'ver proveedores', 
+            'ver kardex',
         ]);
 
         //permisos para el vendedor
