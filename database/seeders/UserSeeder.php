@@ -15,9 +15,7 @@ class UserSeeder extends Seeder
         $admin = User::create([
             'name' => 'Admin User',
             'email' => 'silarac@utn.edu.ec',
-            'password' => Hash::make('G9R+gL90jm'), 
-            'role' => 'admin',
-            'phone' => '0992031359',
+            'password' => Hash::make('admin123'), 
         ]);
         $admin->assignRole('admin');
 
@@ -26,8 +24,6 @@ class UserSeeder extends Seeder
             'name' => 'Regular User',
             'email' => 'user@example.com',
             'password' => Hash::make('user123'), 
-            'role' => 'user',
-            'phone' => '0992031359',
         ]);
         $user->assignRole('user');
 
@@ -36,8 +32,6 @@ class UserSeeder extends Seeder
             'name' => 'Bodeguero User',
             'email' => 'jordanA@example.com',
             'password' => Hash::make('bodega123'),
-            'role' => 'bodeguero',
-            'phone' => '0992031359',
         ]);
         $bodeguero->assignRole('bodeguero');
 
@@ -46,20 +40,8 @@ class UserSeeder extends Seeder
             'name' => 'Vendedor User',
             'email' => 'vendedor@example.com',
             'password' => Hash::make('vendedor123'),
-            'role' => 'vendedor',
-            'phone' => '0992031359',
         ]);
         $vendedor->assignRole('vendedor');
-
-        //crear usuario administador de proveedores
-        $adminProveedor = User::create([
-            'name' => 'Administrador de Proveedor User',
-            'email' => 'Aproveedor@example.com',
-            'password' => Hash::make('Aproveedor123'),
-            'role' => 'adminProveedor',
-            'phone' => '0992031359',
-        ]);
-        $adminProveedor->assignRole('adminProveedor');
 
     }
 }

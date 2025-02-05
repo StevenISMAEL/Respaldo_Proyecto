@@ -55,12 +55,18 @@ Route::middleware(['auth', RoleAdminMiddleware::class . ':admin'])->group(functi
 });
 
 
-// ✅ **Rutas para bodeguero**
 Route::middleware(['auth', RoleAdminMiddleware::class.':bodeguero'])->group(function () {   
     Route::resource('productos', ProductoController::class);
-    Route::get('proveedor', [ProveedorController::class, 'index'])->name('proveedor.index'); 
     Route::get('kardex', [KardexController::class, 'index'])->name('kardex.index');
 });
+
+// 🔹 Nueva ruta con validación de permisos en lugar de middleware de rol
+Route::middleware(['auth'])->group(function () {
+    Route::get('proveedor', [ProveedorController::class, 'index'])
+        ->middleware('can:ver proveedores')
+        ->name('proveedor.index'); 
+});
+
 
 // ✅ **Rutas para vendedor**
 Route::middleware(['auth', RoleAdminMiddleware::class.':vendedor'])->group(function () {
@@ -68,8 +74,8 @@ Route::middleware(['auth', RoleAdminMiddleware::class.':vendedor'])->group(funct
     Route::resource('clientes', ClienteController::class);
 });
 
-// ✅ **Rutas para admin de proveedores**
-Route::middleware(['auth', RoleAdminMiddleware::class.':adminProveedor'])->group(function () {
-    Route::resource('proveedor', ProveedorController::class);
-    Route::resource('compras', CompraController::class);
-});
+// // ✅ **Rutas para admin de proveedores**
+// Route::middleware(['auth', RoleAdminMiddleware::class.':adminProveedor'])->group(function () {
+//     Route::resource('proveedor', ProveedorController::class);
+//     Route::resource('compras', CompraController::class);
+// });

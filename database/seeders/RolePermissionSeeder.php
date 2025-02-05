@@ -10,23 +10,16 @@ class RolePermissionSeeder extends Seeder
 {
     public function run()
     {
-        // ✅ Crear roles
+        // Crear roles
         $admin = Role::firstOrCreate(['name' => 'admin']);
         $user = Role::firstOrCreate(['name' => 'user']);
         $bodeguero = Role::firstOrCreate(['name' => 'bodeguero']); 
         $vendedor = Role::firstOrCreate(['name' => 'vendedor']);
-        $adminProveedor = Role::firstOrCreate(['name' => 'adminProveedor']);
 
-        // ✅ Definir permisos
-        $permissions = [
+         // ✅ Crear permisos
+         $permissions = [
             // Permisos generales
             'ver dashboard',
-            // Permisos de compras
-            'ver compras',
-            // Permisos de ventas (NO ASIGNADOS A BODEGUERO)
-            'gestionar ventas',
-            // Permiso para ver Kardex
-            'ver kardex',
 
             // Permisos de productos
             'crear productos',
@@ -34,52 +27,54 @@ class RolePermissionSeeder extends Seeder
             'eliminar productos',
             'ver productos',
 
-            // Permisos de ventas
+            // Permisos de proveedores
+            'ver proveedores',
+
+            // Permisos de compras
+            'ver compras',
+
+            // Permisos de ventas (NO ASIGNADOS A BODEGUERO)
+            'gestionar ventas',
+
+            //permiso para ver kardex
+            'ver kardex',
+
+
+            //permisos de Ventas
             'crear ventas',
             'editar ventas',
             'eliminar ventas',
             'ver ventas',
-
-            // Permisos de clientes
+            //permisos de Clientes
             'crear clientes',
             'editar clientes',
             'eliminar clientes',
             'ver clientes',
 
-            // Permisos de compras
-            'crear compras',
-            'editar compras',
-            'eliminar compras',
-            'ver compras',
 
-            // Permisos de proveedores
-            'crear proveedores',
-            'editar proveedores',
-            'eliminar proveedores',
-            'ver proveedores',
         ];
 
-        // ✅ Crear permisos en la base de datos
         foreach ($permissions as $permiso) {
             Permission::firstOrCreate(['name' => $permiso]);
         }
 
-        // ✅ Asignar TODOS los permisos al rol admin
-        $admin->syncPermissions(Permission::all());
+        // Asignar permisos a roles
+        $admin->givePermissionTo(Permission::all()); // El admin tiene todos los permisos
 
-        // ✅ Asignar permisos específicos a los demás roles
-        $user->syncPermissions(['ver dashboard', 'ver compras']);
+        $user->givePermissionTo(['ver dashboard', 'ver compras']);
 
-        $bodeguero->syncPermissions([
+        //permisos para el bodeguero
+        $bodeguero->givePermissionTo([
             'crear productos',
             'editar productos',
             'eliminar productos',
             'ver productos',
-            'ver proveedores',  
-            'ver kardex'
+            'ver proveedores', 
+            'ver kardex',
         ]);
 
-        $vendedor->syncPermissions([
+        //permisos para el vendedor
+        $vendedor->givePermissionTo([
             'crear ventas',
             'editar ventas',
             'eliminar ventas',
@@ -88,17 +83,6 @@ class RolePermissionSeeder extends Seeder
             'editar clientes',
             'eliminar clientes',
             'ver clientes'
-        ]);
-
-        $adminProveedor->syncPermissions([
-            'crear proveedores',
-            'editar proveedores',
-            'eliminar proveedores',
-            'ver proveedores',
-            'crear compras',
-            'editar compras',
-            'eliminar compras',
-            'ver compras'
         ]);
     }
 }
