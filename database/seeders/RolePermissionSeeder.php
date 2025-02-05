@@ -66,6 +66,11 @@ class RolePermissionSeeder extends Seeder
             'editar roles',
             'eliminar roles',
             'ver roles',
+
+            // Permisos de permisos
+            'ver configuracion_datos',
+            'gestionar configuracion_datos'
+
         ];
 
         foreach ($permissions as $permiso) {
@@ -102,13 +107,15 @@ class RolePermissionSeeder extends Seeder
 
         // ✅ Permisos para el admin de proveedores
         $adminProveedor->givePermissionTo([
-            // 'crear proveedores',
-            // 'editar proveedores',
-            // 'eliminar proveedores',
+            'crear proveedores',
+            'editar proveedores',
+            'eliminar proveedores',
             // 'crear compras',
             // 'editar compras',
             // 'eliminar compras',
             'ver proveedores',
+            'ver productos',
+
             'ver compras'
         ]);
     }

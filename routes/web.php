@@ -85,10 +85,28 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware('can:ver ventas')->group(function () {
         Route::resource('ventas', VentaController::class)->except(['destroy']);
-        
-        // 🔹 Asegurarse de que el método create sea accesible
+
+        // 🔹 Asegurar acceso a la creación de ventas
         Route::get('ventas/create', [VentaController::class, 'create'])->name('ventas.create')->middleware('can:crear ventas');
     });
+
+    // 📌 Configuración de Datos
+    Route::middleware('can:ver configuracion_datos')->group(function () {
+        Route::resource('configuracion_datos', ConfiguracionDatosController::class)
+            ->names([
+                'index' => 'configuracion_datos.index',
+                'create' => 'configuracion_datos.create',
+                'store' => 'configuracion_datos.store',
+                'edit' => 'configuracion_datos.edit',
+                'update' => 'configuracion_datos.update',
+            ]);
+    });
+
+    // 📌 Generación de PDF para Ventas
+    Route::get('/ventas/pdf/{id}', [VentaController::class, 'generarPDF'])->name('ventas.pdf');
+    
+
+
 });
 
 /* 📌 Rutas para BODEGUERO */
@@ -119,22 +137,22 @@ Route::middleware(['auth'])->group(function () {
 
 /* 📌 Rutas para ADMINISTRADOR DE PROVEEDORES */
 Route::middleware(['auth'])->group(function () {
+
+    // ✅ Acceso total al CRUD de proveedores
     Route::middleware('can:ver proveedores')->group(function () {
         Route::resource('proveedor', ProveedorController::class);
     });
 
+    // ✅ Solo puede ver la lista de compras (index)
     Route::middleware('can:ver compras')->group(function () {
-        Route::resource('compras', CompraController::class);
+        Route::get('compras', [CompraController::class, 'index'])->name('compras.index');
     });
 
-    // 📌 Rutas para configuración de datos (AÚN NO IMPLEMENTADO EN ROLES)
-    Route::prefix('configuracionDatos')->group(function () {
-        Route::get('/', [ConfiguracionDatosController::class, 'index'])->name('configuracion_datos.index');
-        Route::get('/create', [ConfiguracionDatosController::class, 'create'])->name('configuracion_datos.create');
-        Route::post('/', [ConfiguracionDatosController::class, 'store'])->name('configuracion_datos.store');
-        Route::get('/{id}/edit', [ConfiguracionDatosController::class, 'edit'])->name('configuracion_datos.edit');
-        Route::put('/{id}', [ConfiguracionDatosController::class, 'update'])->name('configuracion_datos.update');
+    // ✅ Solo puede ver la lista de productos (index)
+    Route::middleware('can:ver productos')->group(function () {
+        Route::get('productos', [ProductoController::class, 'index'])->name('productos.index');
     });
 
-    Route::get('/ventas/pdf/{id}', [VentaController::class, 'generarPDF'])->name('ventas.pdf');
+
 });
+
