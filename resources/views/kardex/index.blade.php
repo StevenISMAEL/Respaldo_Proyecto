@@ -20,11 +20,12 @@
                                     <tr>
                                         <th>ID Kardex</th>
                                         <th>Código Producto</th>
-                                        <th>Nombre Producto</th>
-                                        <th>Stock</th>
-                                        <th>Mínimo</th>
-                                        <th>Máximo</th>
-                                        <th>Acciones</th>
+                                        <th>Fecha Registro</th>
+                                        <th>Tipo Movimiento</th>
+                                        <th>Cantidad</th>
+                                        <th>Descripción</th>
+                                        <th>Creado</th>
+                                        <th>Actualizado</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -33,37 +34,17 @@
                                             <tr>
                                                 <td>{{ $item->id_kar }}</td>
                                                 <td>{{ $item->codigo_pro }}</td>
-                                                <td>{{ $item->producto ? $item->producto->nombre_pro : 'Sin asignar' }}</td>
-                                                <td>{{ $item->stock_kar }}</td>
-                                                <td>{{ $item->minimo_kar }}</td>
-                                                <td>{{ $item->maximo_kar }}</td>
-                                                <td>
-                                                    <button class="btn btn-primary btn-sm"
-                                                        onclick="toggleDetalles('detalles-{{ $item->id_kar }}')">Detalles</button>
-                                                    
-                                                </td>
-                                            </tr>
-
-                                            <!-- Fila oculta con detalles -->
-                                            <tr id="detalles-{{ $item->id_kar }}" style="display:none;">
-                                                <td colspan="7">
-                                                    <strong>Detalles del Kardex:</strong>
-                                                    <ul>
-                                                        <li><strong>ID Kardex:</strong> {{ $item->id_kar }}</li>
-                                                        <li><strong>Nombre Producto:</strong>
-                                                            {{ $item->producto ? $item->producto->nombre_pro : 'Sin asignar' }}
-                                                        </li>
-                                                        <li><strong>Descripción Producto:</strong>
-                                                            {{ $item->producto ? $item->producto->descripcion_pro : 'No disponible' }}
-                                                        </li>
-                                                    
-                                                    </ul>
-                                                </td>
+                                                <td>{{ $item->fecha_registro_kar }}</td>
+                                                <td>{{ $item->tipo_movimiento }}</td>
+                                                <td>{{ $item->cantidad_movimiento }}</td>
+                                                <td>{{ $item->descripcion_movimiento }}</td>
+                                                <td>{{ $item->created_at }}</td>
+                                                <td>{{ $item->updated_at }}</td>
                                             </tr>
                                         @endforeach
                                     @else
                                         <tr>
-                                            <td colspan="7">No hay registros disponibles.</td>
+                                            <td colspan="8">No hay registros disponibles.</td>
                                         </tr>
                                     @endif
                                 </tbody>

@@ -13,9 +13,20 @@ class KardexController extends Controller
      */
     public function index()
     {
-        $kardex = Kardex::with('producto')->paginate(10);
+        $kardex = Kardex::select(
+            'id_kar',
+            'codigo_pro',
+            'fecha_registro_kar',
+            'tipo_movimiento',
+            'cantidad_movimiento',
+            'descripcion_movimiento',
+            'created_at',
+            'updated_at'
+        )->orderBy('id_kar', 'asc')->paginate(10);
+
         return view('kardex.index', compact('kardex'));
     }
+
 
     /**
      * Mostrar el formulario para crear un nuevo registro en el kardex.
