@@ -54,6 +54,7 @@ Route::middleware(['auth', RoleAdminMiddleware::class . ':admin'])->group(functi
     Route::resource('roles', RoleController::class)->except(['show']);
 });
 
+
 // ✅ **Rutas para bodeguero**
 Route::middleware(['auth', RoleAdminMiddleware::class.':bodeguero'])->group(function () {   
     Route::resource('productos', ProductoController::class);

@@ -1,0 +1,112 @@
+[33mcommit 56cf3f214b366d713512f238b623687d5f863341[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: StevenISMAEL <larasteveen72@gmail.com>
+Date:   Tue Feb 4 08:51:12 2025 -0500
+
+    Commir con respecto a la CRUD crear usuarios y roles
+
+[33mcommit d70bd03eac37b56dfed58e349c21fb2925358c4f[m
+Author: StevenISMAEL <larasteveen72@gmail.com>
+Date:   Tue Feb 4 07:44:50 2025 -0500
+
+    Commit antes del apocalipsois
+
+[33mcommit e68a5ad9870ce308bbb0ca2fa2f661a74a2cb1a6[m
+Author: StevenISMAEL <larasteveen72@gmail.com>
+Date:   Tue Feb 4 01:46:36 2025 -0500
+
+    Comit con todos los roles
+
+[33mcommit eeda74cab15a5436b7dc5f93e1d7bc3c04ffedc8[m
+Author: StevenISMAEL <larasteveen72@gmail.com>
+Date:   Tue Feb 4 00:48:16 2025 -0500
+
+    commit para corregir el menú V1
+
+[33mcommit 7869f9c0b7cd86880497fbadeadfe9016f951617[m
+Author: StevenISMAEL <larasteveen72@gmail.com>
+Date:   Tue Feb 4 00:26:33 2025 -0500
+
+    commit con respecto al rol admin de proveedores
+
+[33mcommit b0f2a2638440e4a4d03d8f8580f9907e98ffebde[m
+Author: StevenISMAEL <larasteveen72@gmail.com>
+Date:   Tue Feb 4 00:04:57 2025 -0500
+
+    cambios en el routes.web
+
+[33mcommit aa784c58cc36fb1957365c705c6486673478b9aa[m
+Author: StevenISMAEL <larasteveen72@gmail.com>
+Date:   Mon Feb 3 23:44:05 2025 -0500
+
+    commit de las rutas, permisos del bodeguero
+
+[33mcommit 56db23faf839a909722ce4a941e814120aec4db5[m
+Author: StevenISMAEL <larasteveen72@gmail.com>
+Date:   Mon Feb 3 23:21:22 2025 -0500
+
+    commit referente al rol vendedor V1
+
+[33mcommit 8bcdf59d1c0597c6fc9f7208de7cca9242ee324c[m
+Author: StevenISMAEL <larasteveen72@gmail.com>
+Date:   Mon Feb 3 21:52:54 2025 -0500
+
+    Copia de seguridad-Proyecto_Avances_Roles01
+
+[33mcommit 3471433c3e9f3d465df921f24f6eb8e8ff2540a8[m
+Author: StevenISMAEL <larasteveen72@gmail.com>
+Date:   Sat Nov 30 21:58:02 2024 -0500
+
+    Commit de Cruds Inventario y Proveedores
+
+[33mcommit 85acb651e2b8257536e9f90e0b932ffc7462924b[m
+Author: Jostin Quilca <jdquilcap1@utn.edu.ec>
+Date:   Sat Nov 30 17:11:31 2024 -0500
+
+    Modifiqué el tipo animal para que sea una lista desplegable
+
+[33mcommit a7ea80e3d20ff3bacb1fe05faae7165827ef4b5f[m
+Author: LeonelArellanoMontalvo <ilarellanom@utn.edu.ec>
+Date:   Sat Nov 30 16:14:54 2024 -0500
+
+    commit cruds: ventas, productos, bultos y clientes
+
+[33mcommit 29145571e4d4c23bb10f0192e09b7ca0dc9814ec[m
+Merge: 06d8fad 1bc6400
+Author: LeonelArellanoMontalvo <ilarellanom@utn.edu.ec>
+Date:   Sat Nov 30 11:46:30 2024 -0500
+
+    Merge pull request #1 from LeonelArellanoMontalvo/crud_bultos_ventas
+    
+    Crud bultos ventas
+
+[33mcommit 1bc64008726c1a880a503bb13f4f41223ea84656[m
+Author: Jostin Quilca <jdquilcap1@utn.edu.ec>
+Date:   Sat Nov 30 11:23:02 2024 -0500
+
+    Cambio en el index ventas
+
+[33mcommit a4fbae7534cec21638708668990b5124ce92345c[m
+Author: Jostin Quilca <jdquilcap1@utn.edu.ec>
+Date:   Sat Nov 30 10:59:19 2024 -0500
+
+    Se creo los modelos vistas y controladores para bulto y venta
+
+[33mcommit 06d8fad7cf340a2514cc59e543dfccc912600f67[m
+Author: LeonelArellanoMontalvo <ilarellanom@utn.edu.ec>
+Date:   Fri Nov 29 19:37:45 2024 -0500
+
+    Create Prueba pull
+    
+    es una prueba de pull
+
+[33mcommit 4903aadd96c10aec22a66f9ca35e5b94edf7eaf8[m
+Author: LeonelArellanoMontalvo <ilarellanom@utn.edu.ec>
+Date:   Fri Nov 29 19:31:44 2024 -0500
+
+    Commit 2
+
+[33mcommit 2d5cd1cae13d0a3fc023c52246b762c5424e26eb[m
+Author: LeonelArellanoMontalvo <ilarellanom@utn.edu.ec>
+Date:   Fri Nov 29 19:07:50 2024 -0500
+
+    Commit 1

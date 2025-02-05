@@ -45,9 +45,12 @@
                         </div>
                         <div class="pull-right">
                             <div class="btn-group">
-                                <a href="{{ route('proveedor.create') }}" class="btn btn-info">Añadir Proveedor</a>
+                                @can('crear proveedores')
+                                    <a href="{{ route('proveedor.create') }}" class="btn btn-info">Añadir Proveedor</a>
+                                @endcan
                             </div>
                         </div>
+
                         <div class="table-container">
                             <table class="table table-bordered table-striped">
                                 <thead>
@@ -76,21 +79,26 @@
                                                 <td>{{ \Carbon\Carbon::parse($proveedor->created_at)->format('d-m-Y') }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($proveedor->updated_at)->format('d-m-Y') }}</td>
                                                 <td>
-                                                    <a href="{{ route('proveedor.edit', $proveedor->ruc_pro) }}"
-                                                        class="btn btn-warning btn-sm"
-                                                        style="border-radius: 5px; padding: 5px 10px;">
-                                                        <i class="glyphicon glyphicon-pencil"></i> Editar
-                                                    </a>
-                                                    <form action="{{ route('proveedor.destroy', $proveedor->ruc_pro) }}"
-                                                        method="POST" style="display:inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm"
-                                                            style="border-radius: 5px; padding: 5px 10px;"
-                                                            onclick="return confirm('¿Está seguro de eliminar este proveedor?');">
-                                                            <i class="glyphicon glyphicon-trash"></i> Eliminar
-                                                        </button>
-                                                    </form>
+                                                    @can('editar proveedores')
+                                                        <a href="{{ route('proveedor.edit', $proveedor->ruc_pro) }}"
+                                                            class="btn btn-warning btn-sm"
+                                                            style="border-radius: 5px; padding: 5px 10px;">
+                                                            <i class="glyphicon glyphicon-pencil"></i> Editar
+                                                        </a>
+                                                    @endcan
+
+                                                    @can('eliminar proveedores')
+                                                        <form action="{{ route('proveedor.destroy', $proveedor->ruc_pro) }}"
+                                                            method="POST" style="display:inline;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger btn-sm"
+                                                                style="border-radius: 5px; padding: 5px 10px;"
+                                                                onclick="return confirm('¿Está seguro de eliminar este proveedor?');">
+                                                                <i class="glyphicon glyphicon-trash"></i> Eliminar
+                                                            </button>
+                                                        </form>
+                                                    @endcan
                                                 </td>
                                             </tr>
                                         @endforeach

@@ -120,37 +120,62 @@
                         <i class="glyphicon glyphicon-home"></i> Inicio
                     </a>
                 </li>
+
+                @can('ver clientes')
                 <li class="{{ Request::is('clientes*') ? 'active' : '' }}">
-                    <a href="{{ route('clientes.index') }}">
+                    <a href="{{ route('cliente.index') }}">
                         <i class="glyphicon glyphicon-user"></i> Clientes
                     </a>
                 </li>
+                @endcan
+
+                @can('ver productos')
                 <li class="{{ Request::is('productos*') ? 'active' : '' }}">
                     <a href="{{ route('productos.index') }}">
                         <i class="glyphicon glyphicon-gift"></i> Productos
                     </a>
                 </li>
+                @endcan
+
+                @can('ver ventas')
                 <li class="{{ Request::is('venta*') ? 'active' : '' }}">
-                    <a href="{{ route('ventas.index') }}">
+                    <a href="{{ route('venta.index') }}">
                         <i class="glyphicon glyphicon-shopping-cart"></i> Ventas
                     </a>
                 </li>
+                @endcan
+
+                @can('ver compras')
                 <li class="{{ Request::is('compras*') ? 'active' : '' }}">
                     <a href="{{ route('compras.index') }}">
                         <i class="glyphicon glyphicon-credit-card"></i> Compras
                     </a>
                 </li>
+                @endcan
+
+                @can('ver proveedores')
                 <li class="{{ Request::is('proveedor*') ? 'active' : '' }}">
                     <a href="{{ route('proveedor.index') }}">
                         <i class="glyphicon glyphicon-briefcase"></i> Proveedores
                     </a>
                 </li>
-                @if (Auth::check() && Auth::user()->role === 'admin')
+                @endcan
+
+                @can('ver kardex')
+                <li class="{{ Request::is('kardex*') ? 'active' : '' }}">
+                    <a href="{{ route('kardex.index') }}">
+                        <i class="glyphicon glyphicon-book"></i> Kardex
+                    </a>
+                </li>
+                @endcan
+
+                @if (Auth::check() && Auth::user()->hasRole('admin'))
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('roles.index') }}">⚙️ Configuración</a>
+                        <a class="nav-link" href="{{ route('roles.index') }}">
+                            <i class="glyphicon glyphicon-cog"></i> Configuración
+                        </a>
                     </li>
                 @endif
-
             </ul>
         </nav>
 
@@ -161,9 +186,6 @@
                     <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
                         <i class="glyphicon glyphicon-align-left"></i>
                     </button>
-                    {{-- <div class="navbar-header">
-                        <a class="navbar-brand" style="color:#fff" href="#">Paws Word</a>
-                    </div> --}}
                     <ul class="nav navbar-nav navbar-right">
                         <li class="navbar-text" style="color:#fff">
                             <strong>Usuario actual:</strong> {{ Auth::user()->name ?? 'Invitado' }}
@@ -171,8 +193,7 @@
                         <li class="ml-3">
                             <form method="POST" action="{{ route('logout') }}" style="display:inline; padding: 10px">
                                 @csrf
-                                <button class="btn btn-danger navbar-btn btn-logout" type="submit">Cerrar
-                                    sesión</button>
+                                <button class="btn btn-danger navbar-btn btn-logout" type="submit">Cerrar sesión</button>
                             </form>
                         </li>
                     </ul>
