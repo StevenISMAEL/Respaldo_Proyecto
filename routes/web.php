@@ -91,20 +91,21 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // 📌 Configuración de Datos
-    Route::middleware('can:ver configuracion_datos')->group(function () {
+    Route::middleware('can:ver configuracionDatos')->group(function () {
         Route::resource('configuracion_datos', ConfiguracionDatosController::class)
-            ->names([
-                'index' => 'configuracion_datos.index',
-                'create' => 'configuracion_datos.create',
-                'store' => 'configuracion_datos.store',
-                'edit' => 'configuracion_datos.edit',
-                'update' => 'configuracion_datos.update',
-            ]);
+            ->except(['destroy']); 
+        
+       
     });
 
-    // 📌 Generación de PDF para Ventas
-    Route::get('/ventas/pdf/{id}', [VentaController::class, 'generarPDF'])->name('ventas.pdf');
-    
+    // // 📌 Rutas para configuración de datos (AÚN NO IMPLEMENTADO EN ROLES)
+    // Route::prefix('configuracionDatos')->group(function () {
+        
+    // });
+
+    // Route::get('/ventas/pdf/{id}', [VentaController::class, 'generarPDF'])->name('ventas.pdf');
+
+
 
 
 });
@@ -137,22 +138,14 @@ Route::middleware(['auth'])->group(function () {
 
 /* 📌 Rutas para ADMINISTRADOR DE PROVEEDORES */
 Route::middleware(['auth'])->group(function () {
-
-    // ✅ Acceso total al CRUD de proveedores
     Route::middleware('can:ver proveedores')->group(function () {
         Route::resource('proveedor', ProveedorController::class);
     });
 
-    // ✅ Solo puede ver la lista de compras (index)
     Route::middleware('can:ver compras')->group(function () {
-        Route::get('compras', [CompraController::class, 'index'])->name('compras.index');
+        Route::resource('compras', CompraController::class);
     });
 
-    // ✅ Solo puede ver la lista de productos (index)
-    Route::middleware('can:ver productos')->group(function () {
-        Route::get('productos', [ProductoController::class, 'index'])->name('productos.index');
-    });
-
-
+    // 📌 Generación de PDF para Ventas
+    Route::get('/ventas/pdf/{id}', [VentaController::class, 'generarPDF'])->name('ventas.pdf');
 });
-
