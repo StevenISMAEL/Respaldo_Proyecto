@@ -123,7 +123,7 @@
 
                 @can('ver clientes')
                 <li class="{{ Request::is('clientes*') ? 'active' : '' }}">
-                    <a href="{{ route('cliente.index') }}">
+                    <a href="{{ route('clientes.index') }}">
                         <i class="glyphicon glyphicon-user"></i> Clientes
                     </a>
                 </li>
@@ -139,7 +139,7 @@
 
                 @can('ver ventas')
                 <li class="{{ Request::is('venta*') ? 'active' : '' }}">
-                    <a href="{{ route('venta.index') }}">
+                    <a href="{{ route('ventas.index') }}">
                         <i class="glyphicon glyphicon-shopping-cart"></i> Ventas
                     </a>
                 </li>
@@ -169,13 +169,16 @@
                 </li>
                 @endcan
 
-                @if (Auth::check() && Auth::user()->hasRole('admin'))
+                {{-- @if (Auth::check() && Auth::user()->hasRole('admin')) --}}
+                @can('ver roles')
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('roles.index') }}">
                             <i class="glyphicon glyphicon-cog"></i> Configuración
                         </a>
                     </li>
-                @endif
+                @endcan
+
+                {{-- @endif --}}
             </ul>
         </nav>
 

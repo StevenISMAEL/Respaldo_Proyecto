@@ -9,11 +9,11 @@
                         <div class="pull-left">
                             <h3>Lista de Kardex</h3>
                         </div>
-                        <div class="pull-right">
+                        {{-- <div class="pull-right">
                             <div class="btn-group">
                                 <a href="{{ route('kardex.create') }}" class="btn btn-info">Añadir Kardex</a>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="table-container">
                             <table id="mytable" class="table table-bordred table-striped">
                                 <thead>

@@ -1,6 +1,5 @@
 <?php
 
-// use Spatie\Permission\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\VentaController;
@@ -11,9 +10,7 @@ use App\Http\Controllers\CompraController;
 use App\Http\Controllers\KardexController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Middleware\RoleAdminMiddleware;
 use App\Http\Controllers\RoleController;
-
 
 // ✅ Ruta principal (welcome)
 Route::get('/', function () {
@@ -35,47 +32,68 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard')->middleware('verified');
-    
 });
 
-// ✅ **Rutas protegidas para admin**
-Route::middleware(['auth', RoleAdminMiddleware::class . ':admin'])->group(function () {   
-    // // Perfil del usuario
-    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    
-    Route::resource('productos', ProductoController::class);
-    Route::resource('ventas', VentaController::class);
-    Route::resource('clientes', ClienteController::class);
-    Route::resource('proveedor', ProveedorController::class);
-    Route::resource('compras', CompraController::class);
-    Route::resource('kardex', KardexController::class);
-    Route::resource('roles', RoleController::class)->except(['show']);
-});
+// ==========================================
+// ✅ **RUTAS SEPARADAS POR ROLES**
+// ==========================================
 
-
-Route::middleware(['auth', RoleAdminMiddleware::class.':bodeguero'])->group(function () {   
-    Route::resource('productos', ProductoController::class);
-    Route::get('kardex', [KardexController::class, 'index'])->name('kardex.index');
-});
-
-// 🔹 Nueva ruta con validación de permisos en lugar de middleware de rol
+/* 📌 Rutas para ADMINISTRADOR */
 Route::middleware(['auth'])->group(function () {
-    Route::get('proveedor', [ProveedorController::class, 'index'])
-        ->middleware('can:ver proveedores')
-        ->name('proveedor.index'); 
+    Route::middleware('can:gestionar roles')->group(function () {
+        Route::resource('roles', RoleController::class)->except(['show']);
+    });
+
+    Route::middleware('can:gestionar proveedores')->group(function () {
+        Route::resource('proveedor', ProveedorController::class);
+    });
+
+    Route::middleware('can:ver compras')->group(function () {
+        Route::resource('compras', CompraController::class);
+    });
+
+    Route::middleware('can:ver clientes')->group(function () {
+        Route::resource('clientes', ClienteController::class);
+    });
+
+    Route::middleware('can:ver ventas')->group(function () {
+        Route::resource('ventas', VentaController::class)->except(['destroy']);
+    });
 });
 
+/* 📌 Rutas para BODEGUERO */
+Route::middleware(['auth'])->group(function () {
+    Route::middleware('can:ver productos')->group(function () {
+        Route::resource('productos', ProductoController::class);
+    });
 
-// ✅ **Rutas para vendedor**
-Route::middleware(['auth', RoleAdminMiddleware::class.':vendedor'])->group(function () {
-    Route::resource('ventas', VentaController::class)->except(['destroy']);
-    Route::resource('clientes', ClienteController::class);
+    Route::middleware('can:ver proveedores')->group(function () {
+        Route::get('proveedor', [ProveedorController::class, 'index'])->name('proveedor.index');
+    });
+
+    Route::middleware('can:ver kardex')->group(function () {
+        Route::get('kardex', [KardexController::class, 'index'])->name('kardex.index');
+    });
 });
 
-// // ✅ **Rutas para admin de proveedores**
-// Route::middleware(['auth', RoleAdminMiddleware::class.':adminProveedor'])->group(function () {
-//     Route::resource('proveedor', ProveedorController::class);
-//     Route::resource('compras', CompraController::class);
-// });
+/* 📌 Rutas para VENDEDOR */
+Route::middleware(['auth'])->group(function () {
+    Route::middleware('can:ver ventas')->group(function () {
+        Route::resource('ventas', VentaController::class)->except(['destroy']);
+    });
+
+    Route::middleware('can:ver clientes')->group(function () {
+        Route::resource('clientes', ClienteController::class);
+    });
+});
+
+/* 📌 Rutas para ADMINISTRADOR DE PROVEEDORES */
+Route::middleware(['auth'])->group(function () {
+    Route::middleware('can:ver proveedores')->group(function () {
+        Route::resource('proveedor', ProveedorController::class);
+    });
+
+    Route::middleware('can:ver compras')->group(function () {
+        Route::resource('compras', CompraController::class);
+    });
+});
