@@ -9,12 +9,16 @@ return new class extends Migration
     public function up()
     {
         Schema::create('ventas', function (Blueprint $table) {
-            $table->string('id_ven', 15)->primary(); // ID único de la venta
-            $table->string('cedula_cli', 10); // Relación con clientes
-            $table->string('nombre_cli_ven', 100); // Nuevo campo para almacenar el nombre del cliente
-            $table->date('fecha_emision_ven')->default(now()); // Fecha de emisión
-            $table->decimal('total_ven', 10, 2)->default(0)->check('total_ven >= 0'); // Total de la venta
-            $table->timestamps(); // created_at y updated_at
+            $table->string('id_ven', 49)->primary(); // Ahora tiene 49 dígitos
+            $table->string('cedula_cli', 10);
+            $table->string('nombre_cli_ven', 100);
+            $table->date('fecha_emision_ven')->default(now());
+            $table->decimal('total_ven', 10, 2)->default(0)->check('total_ven >= 0');
+
+            // 🔹 Nueva columna para almacenar el número de factura sin ceros a la izquierda
+            $table->integer('numero_factura')->unique()->notNullable();
+
+            $table->timestamps();
 
             // Relación con clientes
             $table->foreign('cedula_cli')

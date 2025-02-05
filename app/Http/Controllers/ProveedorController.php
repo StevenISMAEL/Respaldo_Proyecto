@@ -12,10 +12,24 @@ class ProveedorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Obtener todos los proveedores, ordenados por nombre descendente
-        $proveedores = Proveedor::orderBy('nombre_pro', 'DESC')->paginate(3);
+        // Capturar el término de búsqueda
+        $search = $request->input('search');
+
+        // Consulta base
+        $query = Proveedor::query();
+
+        // Si hay búsqueda, filtrar por RUC o nombre
+        if ($search) {
+            $query->where('ruc_pro', 'ILIKE', "%$search%")
+                  ->orWhere('nombre_pro', 'ILIKE', "%$search%");
+        }
+
+        // Obtener los proveedores paginados
+        $proveedores = $query->orderBy('created_at', 'desc')->paginate(10);
+
+        // Retornar la vista con los datos
         return view('proveedor.index', compact('proveedores'));
     }
 

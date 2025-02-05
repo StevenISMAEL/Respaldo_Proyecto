@@ -40,17 +40,7 @@
                                                 <td>
                                                     <button class="btn btn-primary btn-sm"
                                                         onclick="toggleDetalles('detalles-{{ $item->id_kar }}')">Detalles</button>
-                                                    <a href="{{ route('kardex.edit', $item->id_kar) }}"
-                                                        class="btn btn-warning btn-sm">Editar</a>
-                                                    <form action="{{ route('kardex.destroy', $item->id_kar) }}"
-                                                        method="POST" style="display:inline-block;">
-                                                        {{ csrf_field() }}
-                                                        {{ method_field('DELETE') }}
-                                                        <button type="submit" class="btn btn-danger btn-sm"
-                                                            onclick="return confirm('¿Estás seguro de que deseas eliminar este registro de kardex?');">
-                                                            Eliminar
-                                                        </button>
-                                                    </form>
+                                                    
                                                 </td>
                                             </tr>
 

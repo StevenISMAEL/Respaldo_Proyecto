@@ -13,9 +13,17 @@ use App\Models\Lote;
 
 class CompraController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $compras = Compra::with('detalles')->paginate(10);
+        // Obtiene el término de búsqueda si existe
+        $search = $request->query('search');
+
+        // Consulta de compras con filtro si hay búsqueda
+        $compras = Compra::when($search, function ($query) use ($search) {
+            return $query->where('id_com', 'ILIKE', "%{$search}%")
+                         ->orWhere('ruc_pro', 'ILIKE', "%{$search}%");
+        })->orderBy('fecha_emision_com', 'desc')->paginate(10);
+
         return view('compras.index', compact('compras'));
     }
 

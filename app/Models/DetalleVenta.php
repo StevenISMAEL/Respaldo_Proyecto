@@ -16,6 +16,7 @@ class DetalleVenta extends Model
     protected $fillable = [
         'id_ven',
         'codigo_pro',
+        'precio_unitario_detven', // Nuevo campo agregado
         'cantidad_pro_detven',
         'iva_detven',
         'descuento_detven',

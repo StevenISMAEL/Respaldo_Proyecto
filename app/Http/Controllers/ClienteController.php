@@ -3,16 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Cliente;
 
 class ClienteController extends Controller
 {
     /**
-     * Mostrar lista de clientes.
+     * Mostrar lista de clientes con búsqueda.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $clientes = Cliente::orderBy('created_at', 'desc')->paginate(10); // Ordenar por fecha de creación
+        $search = $request->input('search');
+
+        $clientes = Cliente::when($search, function ($query) use ($search) {
+            return $query->whereRaw("LOWER(cedula_cli) ILIKE ?", ["%".strtolower($search)."%"])
+                         ->orWhereRaw("LOWER(nombre_cli) ILIKE ?", ["%".strtolower($search)."%"]);
+        })->paginate(10);
+
         return view('clientes.index', compact('clientes'));
     }
 
@@ -25,17 +32,31 @@ class ClienteController extends Controller
     }
 
     /**
-     * Almacenar un nuevo cliente en la base de datos.
+     * Almacenar un nuevo cliente en la base de datos con validaciones de cédula y teléfono.
      */
     public function store(Request $request)
     {
         $request->validate([
-            'cedula_cli'        => 'required|unique:clientes,cedula_cli|max:10',
-            'nombre_cli'        => 'required|string|max:100',
-            'direccion_cli'     => 'nullable|string|max:150',
-            'telefono_cli'      => 'nullable|string|max:10',
-            'correo_cli'        => 'nullable|email|max:100',
+            'cedula_cli'    => 'required|unique:clientes,cedula_cli|max:10',
+            'nombre_cli'    => 'required|string|max:100',
+            'direccion_cli' => 'nullable|string|max:150',
+            'telefono_cli'  => 'nullable|string|max:10',
+            'correo_cli'    => 'nullable|email|max:100',
         ]);
+
+        // **Validar cédula con la función de PostgreSQL**
+        $esCedulaValida = DB::select('SELECT validar_cedula_ecuatoriana(?) AS valido', [$request->cedula_cli]);
+
+        if (!$esCedulaValida[0]->valido) {
+            return redirect()->back()->withErrors(['cedula_cli' => 'La cédula ingresada no es válida.'])->withInput();
+        }
+
+        // **Validar teléfono con la función de PostgreSQL**
+        $esTelefonoValido = DB::select("SELECT validar_telefono_ecuadoriano(?) AS valido", [$request->telefono_cli]);
+
+        if (!$esTelefonoValido[0]->valido) {
+            return redirect()->back()->withErrors(['telefono_cli' => 'El teléfono debe tener exactamente 10 dígitos.'])->withInput();
+        }
 
         Cliente::create($request->all());
 
@@ -61,16 +82,30 @@ class ClienteController extends Controller
     }
 
     /**
-     * Actualizar la información de un cliente.
+     * Actualizar la información de un cliente con validaciones de cédula y teléfono.
      */
     public function update(Request $request, $cedula_cli)
     {
         $request->validate([
-            'nombre_cli'        => 'required|string|max:100',
-            'direccion_cli'     => 'nullable|string|max:150',
-            'telefono_cli'      => 'nullable|string|max:10',
-            'correo_cli'        => 'nullable|email|max:100',
+            'nombre_cli'    => 'required|string|max:100',
+            'direccion_cli' => 'nullable|string|max:150',
+            'telefono_cli'  => 'nullable|string|max:10',
+            'correo_cli'    => 'nullable|email|max:100',
         ]);
+
+        // **Validar cédula con la función de PostgreSQL**
+        $esCedulaValida = DB::select('SELECT validar_cedula_ecuatoriana(?) AS valido', [$cedula_cli]);
+
+        if (!$esCedulaValida[0]->valido) {
+            return redirect()->back()->withErrors(['cedula_cli' => 'La cédula ingresada no es válida.'])->withInput();
+        }
+
+        // **Validar teléfono con la función de PostgreSQL**
+        $esTelefonoValido = DB::select("SELECT validar_telefono_ecuadoriano(?) AS valido", [$request->telefono_cli]);
+
+        if (!$esTelefonoValido[0]->valido) {
+            return redirect()->back()->withErrors(['telefono_cli' => 'El teléfono debe tener exactamente 10 dígitos.'])->withInput();
+        }
 
         $cliente = Cliente::findOrFail($cedula_cli);
         $cliente->update($request->all());

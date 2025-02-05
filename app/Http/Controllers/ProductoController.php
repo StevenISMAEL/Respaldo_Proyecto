@@ -11,9 +11,16 @@ class ProductoController extends Controller
     /**
      * Mostrar una lista de productos con paginación.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $productos = Producto::orderBy('created_at', 'desc')->paginate(10);
+        $search = $request->input('search');
+    
+        // Filtrar los productos por código_pro o nombre_pro
+        $productos = Producto::when($search, function ($query, $search) {
+            return $query->where('codigo_pro', 'ILIKE', "%{$search}%")
+                         ->orWhere('nombre_pro', 'ILIKE', "%{$search}%");
+        })->paginate(10);
+    
         return view('producto.index', compact('productos'));
     }
 

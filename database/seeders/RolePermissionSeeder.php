@@ -79,10 +79,10 @@ class RolePermissionSeeder extends Seeder
 
         // ✅ Permisos para el bodeguero
         $bodeguero->givePermissionTo([
-            'gestionar productos',
-            'crear productos',
-            'editar productos',
-            'eliminar productos',
+            // 'gestionar productos',
+            // 'crear productos',
+            // 'editar productos',
+            // 'eliminar productos',
             'ver productos',
             'ver proveedores',
             'ver kardex'
@@ -90,25 +90,25 @@ class RolePermissionSeeder extends Seeder
 
         // ✅ Permisos para el vendedor
         $vendedor->givePermissionTo([
-            'crear ventas',
-            'editar ventas',
-            'eliminar ventas',
+            // 'crear ventas',
+            // 'editar ventas',
+            // 'eliminar ventas',
+            // 'crear clientes',
+            // 'editar clientes',
+            // 'eliminar clientes',
+            'ver clientes',
             'ver ventas',
-            'crear clientes',
-            'editar clientes',
-            'eliminar clientes',
-            'ver clientes'
         ]);
 
         // ✅ Permisos para el admin de proveedores
         $adminProveedor->givePermissionTo([
-            'crear proveedores',
-            'editar proveedores',
-            'eliminar proveedores',
+            // 'crear proveedores',
+            // 'editar proveedores',
+            // 'eliminar proveedores',
+            // 'crear compras',
+            // 'editar compras',
+            // 'eliminar compras',
             'ver proveedores',
-            'crear compras',
-            'editar compras',
-            'eliminar compras',
             'ver compras'
         ]);
     }

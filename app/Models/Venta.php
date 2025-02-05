@@ -21,7 +21,8 @@ class Venta extends Model
         'cedula_cli',
         'nombre_cli_ven',
         'fecha_emision_ven',
-        'total_ven'
+        'total_ven',
+        'numero_factura'
     ];
 
     public function cliente()

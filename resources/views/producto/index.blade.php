@@ -5,27 +5,27 @@
         <!-- Tarjetas de métricas -->
         <div class="row text-center">
             <div class="col-md-3">
-                <div class="panel-card" style="background-color: #f0ad4e; color: #fff;">
+                <div class="panel-card" style="background-color: #f0ad4e; color: black;">
                     <h3><i class="glyphicon glyphicon-list-alt"></i> Total Productos</h3>
-                    <p style="font-size: 24px;">{{ $productos->count() }}</p>
+                    <p style="font-size: 24px; color: black;">{{ $productos->count() }}</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="panel-card" style="background-color: #5bc0de; color: #fff;">
+                <div class="panel-card" style="background-color: #5bc0de; color: black;">
                     <h3><i class="glyphicon glyphicon-apple"></i> Productos Alimenticios</h3>
-                    <p style="font-size: 24px;">{{ $productos->where('alimenticio_pro', true)->count() }}</p>
+                    <p style="font-size: 24px; color: black;">{{ $productos->where('alimenticio_pro', true)->count() }}</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="panel-card" style="background-color: #5cb85c; color: #fff;">
+                <div class="panel-card" style="background-color: #5cb85c; color: black;">
                     <h3><i class="glyphicon glyphicon-usd"></i> Precio Promedio</h3>
-                    <p style="font-size: 24px;">${{ number_format($productos->avg('precio_unitario_pro'), 2) }}</p>
+                    <p style="font-size: 24px; color: black;">${{ number_format($productos->avg('precio_unitario_pro'), 2) }}</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="panel-card" style="background-color: #d9534f; color: #fff;">
+                <div class="panel-card" style="background-color: #d9534f; color: black;">
                     <h3><i class="glyphicon glyphicon-tag"></i> Último Producto</h3>
-                    <p style="font-size: 24px;">{{ $productos->sortByDesc('created_at')->first()->nombre_pro ?? 'N/A' }}</p>
+                    <p style="font-size: 24px; color: black;">{{ $productos->sortByDesc('created_at')->first()->nombre_pro ?? 'N/A' }}</p>
                 </div>
             </div>
         </div>
@@ -35,15 +35,40 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Lista de Productos</h3>
+                        <div class="pull-left">
+                            <h3 class="panel-title">
+                                <i class="glyphicon glyphicon-th-list"></i> Lista de Productos
+                            </h3>
+                        </div>
                         <div class="pull-right">
-                            <a href="{{ route('productos.create') }}" class="btn btn-success btn-sm">
+                            <a href="{{ route('productos.create') }}" class="btn btn-success">
                                 <i class="glyphicon glyphicon-plus"></i> Añadir Producto
                             </a>
                         </div>
                         <div class="clearfix"></div>
                     </div>
                     <div class="panel-body">
+                        <!-- Barra de búsqueda con margen inferior -->
+                        <form action="{{ route('productos.index') }}" method="GET" class="form-inline" style="margin-bottom: 15px;">
+                            <div class="input-group">
+                                <input type="text" name="search" class="form-control" placeholder="Buscar por código o nombre..."
+                                    value="{{ request()->query('search') }}">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success" type="submit">
+                                        <i class="glyphicon glyphicon-search"></i> Buscar
+                                    </button>
+                                </span>
+                                @if(request()->has('search') && request('search') !== '')
+                                    <span style="margin-left: 8px;" class="input-group-btn">
+                                        <a href="{{ route('productos.index') }}" class="btn btn-danger">
+                                            <i class="glyphicon glyphicon-remove"></i> Quitar Filtro
+                                        </a>
+                                    </span>
+                                @endif
+                            </div>
+                        </form>
+
+                        <!-- Tabla de productos -->
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped">
                                 <thead>

@@ -10,8 +10,9 @@ return new class extends Migration
     {
         Schema::create('detalles_ventas', function (Blueprint $table) {
             $table->id('id_detven'); // Clave primaria autoincremental
-            $table->string('id_ven', 15); // Relación con ventas
+            $table->string('id_ven', 49); // Relación con ventas
             $table->string('codigo_pro', 15); // Relación con productos
+            $table->decimal('precio_unitario_detven', 10, 2)->default(0)->check('precio_unitario_detven >= 0'); // Precio unitario en la venta
             $table->integer('cantidad_pro_detven')->default(0)->check('cantidad_pro_detven >= 0'); // Cantidad vendida
             $table->decimal('iva_detven', 10, 2)->default(0)->check('iva_detven >= 0'); // IVA del producto
             $table->decimal('descuento_detven', 10, 2)->default(0)->check('descuento_detven >= 0'); // Descuento
